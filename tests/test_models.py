@@ -260,3 +260,41 @@ class TestProductModel(unittest.TestCase):
                     "category": product.category.name  # convert enum to string
                 }
             )
+
+    def test_deserializing_with_wrong_attribute_category(self):
+        """It should not deserialize a dictionary with a wrong attribute category (WRONG)"""
+        product = ProductFactory()
+
+        # Create a new product
+        product.create()
+
+        with self.assertRaises(DataValidationError):
+            product.deserialize(
+                {
+                    "id": product.id,
+                    "name": product.name,
+                    "description": product.description,
+                    "price": str(product.price),
+                    "available": product.available,
+                    "category": "WRONG"
+                }
+            )
+
+    def test_deserializing_with_wrong_price_type(self):
+        """It should not deserialize a dictionary with a wrong price type"""
+        product = ProductFactory()
+
+        # Create a new product
+        product.create()
+
+        with self.assertRaises(DataValidationError):
+            product.deserialize(
+                {
+                    "id": product.id,
+                    "name": product.name,
+                    "description": product.description,
+                    "price": None,
+                    "available": product.available,
+                    "category": product.category.name  # convert enum to string
+                }
+            )
