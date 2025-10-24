@@ -240,4 +240,21 @@ class TestProductModel(unittest.TestCase):
         product.id = None
 
         with self.assertRaises(DataValidationError):
-            product.update()()
+            product.update()
+
+    def test_deserializing_with_wrong_availability_type(self):
+        """It should not deserialize a dictionary with a wrong boolean type for available"""
+        product = ProductFactory()
+
+        # Create a new product
+        product.create()
+
+        with self.assertRaises(DataValidationError):
+            product.deserialize({
+            "id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "price": str(product.price),
+            "available": "Wrong boolean type",
+            "category": product.category.name  # convert enum to string
+        })
