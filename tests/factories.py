@@ -44,7 +44,7 @@ class ProductFactory(factory.Factory):
             "Towels", 
             "Ford", 
             "Chevy", 
-            "Hammer"", 
+            "Hammer",
             "Wrench"
         ]
     )
