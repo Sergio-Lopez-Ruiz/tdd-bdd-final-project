@@ -298,3 +298,22 @@ class TestProductModel(unittest.TestCase):
                     "category": product.category.name  # convert enum to string
                 }
             )
+
+    def test_find_products_by_price(self):
+        """It should find a product by price"""
+        products = ProductFactory.create_batch(10)
+
+        for product in products:
+            product.create()
+
+        search_price = products[0].price
+
+        count = len([product for product in products if product.price == search_price])
+        found = Product.find_by_price(search_price)
+
+        # Same amount found manually and with the function
+        self.assertEqual(found.count(), count)
+
+        # All founds have the same name
+        for product in found:
+            self.assertEqual(product.price, search_price)
