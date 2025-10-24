@@ -250,11 +250,13 @@ class TestProductModel(unittest.TestCase):
         product.create()
 
         with self.assertRaises(DataValidationError):
-            product.deserialize({
-            "id": product.id,
-            "name": product.name,
-            "description": product.description,
-            "price": str(product.price),
-            "available": "Wrong boolean type",
-            "category": product.category.name  # convert enum to string
-        })
+            product.deserialize(
+                {
+                    "id": product.id,
+                    "name": product.name,
+                    "description": product.description,
+                    "price": str(product.price),
+                    "available": "Wrong boolean type",
+                    "category": product.category.name  # convert enum to string
+                }
+            )
