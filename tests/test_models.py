@@ -113,7 +113,7 @@ class TestProductModel(unittest.TestCase):
         product.create()
         self.assertIsNotNone(product.id)
 
-        #Fetch it
+        # Fetch it
         product_found = Product.find(product.id)
         self.assertEqual(product_found.id, product.id)
         self.assertEqual(product_found.name, product.name)
@@ -128,16 +128,16 @@ class TestProductModel(unittest.TestCase):
         product.id = None
         product.create()
         self.assertIsNotNone(product.id)
-        
+
         new_description = "My own description"
         product.description = new_description
         original_id = product.id
-        
+
         product.update()
         self.assertEqual(product.id, original_id)
         self.assertEqual(product.description, new_description)
 
-        #Fetch all
+        # Fetch all
         products = Product.all()
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0].id, original_id)
@@ -150,13 +150,13 @@ class TestProductModel(unittest.TestCase):
         # Create a new product
         product.id = None
         product.create()
-                
+
         self.assertEqual(len(Product.all()), 1)
-        
-        #Delete!
+
+        # Delete!
         product.delete()
 
-        #Check that it does not exist anymore
+        # Check that it does not exist anymore
         self.assertEqual(len(Product.all()), 0)
 
     def test_list_all_products(self):
@@ -167,7 +167,7 @@ class TestProductModel(unittest.TestCase):
         for _ in range(5):
             product = ProductFactory()
             product.create()
-        
+
         products = Product.all()
         self.assertEqual(len(products), 5)
 
@@ -177,7 +177,7 @@ class TestProductModel(unittest.TestCase):
 
         for product in products:
             product.create()
-        
+
         search_name = products[0].name
 
         count = len([product for product in products if product.name == search_name])
@@ -196,7 +196,7 @@ class TestProductModel(unittest.TestCase):
 
         for product in products:
             product.create()
-        
+
         search_available = products[0].available
 
         count = len([product for product in products if product.available == search_available])
@@ -215,7 +215,7 @@ class TestProductModel(unittest.TestCase):
 
         for product in products:
             product.create()
-        
+
         search_category = products[0].category
 
         count = len([product for product in products if product.category == search_category])
