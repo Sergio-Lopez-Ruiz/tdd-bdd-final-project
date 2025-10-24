@@ -158,4 +158,16 @@ class TestProductModel(unittest.TestCase):
 
         #Check that it does not exist anymore
         self.assertEqual(len(Product.all()), 0)
+
+    def test_list_all_products(self):
+        """It should list all products"""
+        products = Product.all()
+        self.assertEqual(len(products), 0)
+
+        for _ in range(5):
+            product = ProductFactory()
+            product.create()
         
+        products = Product.all()
+        self.assertEqual(len(products), 5)
+
