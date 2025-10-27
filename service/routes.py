@@ -102,7 +102,14 @@ def create_products():
 # PLACE YOUR CODE TO LIST ALL PRODUCTS HERE
 #
 
-
+@app.route("/products", methods=["GET"])
+def list_products():
+    """Returns a list of Products"""
+    app.logger.info("Request to list Products...")
+    products = Product.all()
+    results = [product.serialize() for product in products]
+    app.logger.info("[%s] Products returned", len(results))
+    return results, status.HTTP_200_OK
 
 ######################################################################
 # R E A D   A   P R O D U C T
@@ -111,6 +118,7 @@ def create_products():
 #
 # PLACE YOUR CODE HERE TO READ A PRODUCT
 #
+
 
 @app.route("/products/<product_id>", methods=["GET"])
 def get_products(product_id):
@@ -135,6 +143,7 @@ def get_products(product_id):
 #
 # PLACE YOUR CODE TO UPDATE A PRODUCT HERE
 #
+
 
 @app.route("/products/<int:product_id>", methods=["PUT"])
 def update_products(product_id):
@@ -173,7 +182,7 @@ def delete_products(product_id):
     This endpoint will delete a Product based the id specified in the path
     """
     app.logger.info("Request to Delete a product with id [%s]", product_id)
-    
+
     product = Product.find(product_id)
     if product:
         product.delete()
